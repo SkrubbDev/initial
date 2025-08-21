@@ -55,7 +55,17 @@ exports.handler = async (event, context) => {
     const formData = new URLSearchParams();
     formData.append('email', data.email);
     formData.append('type', data.type);
+    formData.append('name', data.name);
+    formData.append('postalCode', data.postalCode || '');
     formData.append('timestamp', new Date().toISOString());
+    
+    // Add form-specific fields
+    if (data.type === 'client') {
+      formData.append('cleaningDetails', data.cleaningDetails || '');
+    } else if (data.type === 'contractor') {
+      formData.append('canWorkInCanada', data.canWorkInCanada || '');
+      formData.append('cleaningExperience', data.cleaningExperience || '');
+    }
 
     console.log('Sending to Google Apps Script:', {
       url: GOOGLE_SCRIPT_URL,
