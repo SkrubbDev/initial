@@ -7,11 +7,9 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "dev:full": "./dev.sh",
-    "postinstall": "npm run build",
-    "prebuild": "mkdir -p dist",
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "build:watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "dev:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build": "echo 'CSS already built - use dist/output.css'",
+    "build:watch": "echo 'CSS already built - use dist/output.css'",
+    "dev:css": "echo 'CSS already built - use dist/output.css'",
     "test": "echo 'No tests specified'"
   },
   "dependencies": {

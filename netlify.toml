@@ -1,8 +1,7 @@
 [build]
   publish = "."
   functions = "netlify/functions"
-  command = "npm ci && npm run build"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
+  command = "npm ci"
 
 [build.environment]
   NODE_VERSION = "18"
