@@ -1,0 +1,22 @@
+{
+  "name": "skrubb-landing-page",
+  "version": "1.0.0",
+  "description": "Skrubb Landing Page - Local Development Setup",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/ --entry-file=index.html",
+    "start": "live-server --port=3000 --open=/ --entry-file=index.html",
+    "serve": "python3 -m http.server 3000",
+    "serve-python": "python -m http.server 3000"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "keywords": [
+    "landing-page",
+    "skrubb",
+    "cleaning-service"
+  ],
+  "author": "Skrubb Team",
+  "license": "MIT"
+}
