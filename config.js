@@ -1,7 +1,7 @@
 // Configuration file for Skrubb Landing Page
 const CONFIG = {
     // Google Apps Script Web App URL - Replace with your actual URL after deployment
-    GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxK3YfwmbULedxnKPVi4rGkSkAaSQUoGE_Mvah8hj3vswLQ53hZRg5gEnvz_qGjCArZ6g/exec',
+    GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbx9fCv4PICvOdWB9kkrR-k_tbAMfl-1lkC5hPpguEo2LoMbwWumHTzcHtIHjlGTq37r5w/exec',
     
     // Form submission settings
     SUBMISSION_TIMEOUT: 10000, // 10 seconds
