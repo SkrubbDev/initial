@@ -45,7 +45,6 @@ function generateForms() {
                             <label for="cleaningDetails" class="block text-sm font-medium text-secondary mb-1 font-lexend">Detail of what you'd like cleaned</label>
                             <textarea id="cleaningDetails" name="cleaningDetails" rows="3" maxlength="500" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Tell us about your cleaning needs..."></textarea>
                             <div class="flex justify-between items-center mt-1">
-                                <span class="text-xs text-gray-500">Minimum 10 characters</span>
                                 <span class="text-xs text-gray-500"><span id="cleaningDetailsCount">0</span>/500</span>
                             </div>
                         </div>
