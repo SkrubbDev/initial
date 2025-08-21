@@ -1,103 +1,115 @@
-# Skrubb Landing Page
+# 🧹 Skrubb Landing Page
 
-A modern, responsive landing page for Skrubb cleaning services with waiting list functionality.
+A modern, secure landing page for Skrubb cleaning service with waiting list functionality.
 
-## Features
+## 🚀 Quick Start
 
-- 🎨 Modern, responsive design with Tailwind CSS
-- 📱 Mobile-first approach
-- 📝 Interactive forms for clients and contractors
-- 🔄 Real-time form validation
-- 📊 Google Sheets integration for data collection
-- 🎯 Beautiful UI with smooth animations
+```bash
+# Install dependencies
+npm install
 
-## Local Development Setup
+# Start development server
+npm run dev:full
 
-### Option 1: Using Node.js (Recommended)
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Start development server:**
-   ```bash
-   npm run dev
-   ```
-
-3. **Open your browser:**
-   The page will automatically open at `http://localhost:3000`
-
-### Option 2: Using Python
-
-If you prefer Python or don't have Node.js installed:
-
-1. **Start Python server:**
-   ```bash
-   # For Python 3
-   npm run serve
-   
-   # For Python 2
-   npm run serve-python
-   ```
-
-2. **Open your browser:**
-   Navigate to `http://localhost:3000`
-
-### Option 3: Manual Server
-
-You can also use any local server of your choice:
-- VS Code Live Server extension
-- Browser-sync
-- Any other local development server
-
-## Project Structure
-
-```
-skrubb-landing-page/
-├── index.html          # Main HTML file
-├── script.js           # JavaScript functionality
-├── config.js           # Configuration settings
-├── images/             # Logo and image assets
-├── package.json        # Dependencies and scripts
-└── README.md           # This file
+# Build for production
+npm run build
 ```
 
-## Development Commands
+## 📱 Live Demo
 
-- `npm run dev` - Start development server with live reload
-- `npm start` - Same as dev command
-- `npm run serve` - Start Python 3 server
-- `npm run serve-python` - Start Python 2 server
+Visit: [https://skrubb-waitinglist.netlify.app/](https://skrubb-waitinglist.netlify.app/)
 
-## Configuration
+## ✨ Features
 
-Edit `config.js` to modify:
-- Google Apps Script URL
-- Form submission settings
-- Notification durations
-- API endpoints
+- **Secure Form Handling** - Backend API with rate limiting
+- **Modern Design** - Tailwind CSS with custom brand colors
+- **Responsive Layout** - Mobile-first design approach
+- **Google Sheets Integration** - Automatic data collection
+- **Security First** - CORS protection, input validation, CSP headers
 
-## Browser Support
+## 🏗️ Architecture
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Styling**: Tailwind CSS with custom components
+- **Backend**: Netlify serverless functions
+- **Data Storage**: Google Sheets via Apps Script
+- **Deployment**: Netlify with automatic builds
 
-## Notes
+## 📚 Documentation
 
-- The development server runs on port 3000 by default
-- Live reload is enabled for automatic browser refresh on file changes
-- All form submissions go to Google Sheets via Google Apps Script
-- The page is fully responsive and works on all device sizes
+All detailed documentation is organized in the [`docs/`](./docs/) folder:
 
-## Troubleshooting
+- [**README.md**](./docs/README.md) - Original project overview
+- [**GOOGLE_SHEETS_SETUP.md**](./docs/GOOGLE_SHEETS_SETUP.md) - Google Sheets configuration
+- [**SECURITY_UPGRADE.md**](./docs/SECURITY_UPGRADE.md) - Security implementation details
+- [**TAILWIND_SETUP.md**](./docs/TAILWIND_SETUP.md) - Tailwind CSS configuration
+- [**NETLIFY_DEPLOYMENT.md**](./docs/NETLIFY_DEPLOYMENT.md) - Deployment guide
 
-If you encounter issues:
+## 🛠️ Development
 
-1. **Port already in use:** Change the port in package.json scripts
-2. **Node.js not found:** Install Node.js from [nodejs.org](https://nodejs.org/)
-3. **Python not found:** Install Python from [python.org](https://python.org/)
+```bash
+# Development scripts
+npm run dev          # Backend server only
+npm run dev:css      # CSS watching only
+npm run dev:full     # Both server and CSS (recommended)
+npm run build        # Production CSS build
+npm run build:watch  # CSS watching for development
+```
 
-For more help, check the console for error messages or refer to the browser's developer tools.
+## 🔒 Security Features
+
+- Rate limiting (10 requests per IP per 15 minutes)
+- Input validation and sanitization
+- Content Security Policy (CSP) headers
+- CORS protection
+- Environment variable protection
+
+## 🎨 Customization
+
+- **Colors**: Edit `src/input.css` for brand colors
+- **Fonts**: Google Fonts integration (Lexend Exa)
+- **Components**: Custom Tailwind component classes
+- **Forms**: Modular form generation system
+
+## 📦 Project Structure
+
+```
+├── docs/                    # 📚 Documentation
+├── images/                  # 🖼️ Brand assets
+├── netlify/                 # ☁️ Netlify configuration
+│   └── functions/          # ⚡ Serverless functions
+├── src/                     # 🎨 CSS source
+│   └── input.css           # Tailwind input file
+├── dist/                    # 🚀 Compiled CSS
+├── index.html              # 🏠 Main landing page
+├── script.js               # ⚙️ Frontend logic
+├── config.js               # ⚙️ Configuration
+├── package.json            # 📦 Dependencies
+├── tailwind.config.js      # 🎨 Tailwind config
+└── netlify.toml           # ☁️ Netlify settings
+```
+
+## 🚀 Deployment
+
+This project is configured for automatic deployment on Netlify:
+
+1. **Git Integration**: Push to main branch triggers auto-deploy
+2. **Environment Variables**: Set `GOOGLE_SCRIPT_URL` in Netlify dashboard
+3. **Functions**: Serverless functions handle form submissions
+4. **Build Process**: Automatic CSS compilation and optimization
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see [LICENSE](./LICENSE) file for details.
+
+---
+
+**Built with ❤️ for Skrubb cleaning service**
