@@ -1,0 +1,12 @@
+{
+  "name": "skrubb-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for Skrubb landing page",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
