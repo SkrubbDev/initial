@@ -2,6 +2,13 @@
 function generateForms() {
     const formsContainer = document.getElementById('formsContainer');
     
+    if (!formsContainer) {
+        console.error('Forms container not found!');
+        return;
+    }
+    
+    console.log('Forms container found, generating forms...');
+    
     // Generate client form HTML
     const clientFormHTML = `
         <!-- Client Form Modal -->
@@ -113,6 +120,10 @@ function generateForms() {
     
     // Insert both forms into the container
     formsContainer.innerHTML = clientFormHTML + contractorFormHTML;
+    
+    console.log('Forms generated and inserted into DOM');
+    console.log('Client form element:', document.getElementById('clientForm'));
+    console.log('Contractor form element:', document.getElementById('contractorForm'));
     
     // Setup form functionality after generation
     setupFormFunctionality();
@@ -305,9 +316,12 @@ function clearFieldError(fieldId) {
 
 // Setup form functionality
 function setupFormFunctionality() {
+    console.log('Setting up form functionality...');
+    
     // Client form submission
     const clientForm = document.getElementById('clientForm');
     if (clientForm) {
+        console.log('Client form found, setting up event listener');
         clientForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -375,6 +389,7 @@ function setupFormFunctionality() {
     // Contractor form submission
     const contractorForm = document.getElementById('contractorForm');
     if (contractorForm) {
+        console.log('Contractor form found, setting up event listener');
         contractorForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -614,8 +629,24 @@ function validateField(fieldId, value) {
 }
 
 function submitToWaitingList(data) {
+    // Find the correct submit button based on form type
+    let submitBtn, formId;
+    
+    if (data.type === 'client') {
+        formId = 'clientForm';
+        submitBtn = document.querySelector('#clientForm button[type="submit"]');
+    } else if (data.type === 'contractor') {
+        formId = 'contractorForm';
+        submitBtn = document.querySelector('#contractorForm button[type="submit"]');
+    }
+    
+    if (!submitBtn) {
+        console.error('Submit button not found for form type:', data.type);
+        showNotification('Error: Form not found. Please refresh the page and try again.', 'error');
+        return;
+    }
+    
     // Show loading state
-    const submitBtn = document.querySelector('#waitingListForm button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;

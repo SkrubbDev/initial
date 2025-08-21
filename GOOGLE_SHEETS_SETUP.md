@@ -7,25 +7,54 @@ This guide will walk you through setting up Google Sheets integration for your S
 - Access to Google Sheets
 - Basic knowledge of copying/pasting URLs
 
-## Step 1: Create the Google Sheet
+## Step 1: Create the Google Sheets
 
-1. **Go to [Google Sheets](https://sheets.google.com)** and create a new spreadsheet
-2. **Name it** something like "Skrubb Waiting Lists"
-3. **Set up the columns** in the first row:
+### **Client Sheet**
+1. **Create a new Google Sheet** named "Skrubb Client Waiting List"
+2. **Set up the columns** in the first row:
    ```
    A1: Timestamp
-   B1: Type
-   C1: Name
-   D1: Email
-   E1: Postal Code
-   F1: Cleaning Details (Client)
-   G1: Can Work in Canada (Contractor)
-   H1: Cleaning Experience (Contractor)
-   I1: IP Address
+   B1: Name
+   C1: Email
+   D1: Postal Code
+   E1: Cleaning Details
+   F1: IP Address
    ```
-4. **Format the header row** (make it bold, add colors, etc.)
 
-## Step 2: Set up Google Apps Script
+### **Contractor Sheet**
+1. **Create another Google Sheet** named "Skrubb Contractor Waiting List"
+2. **Set up the columns** in the first row:
+   ```
+   A1: Timestamp
+   B1: Name
+   C1: Email
+   D1: Postal Code
+   E1: Can Work in Canada
+   F1: Cleaning Experience
+   G1: IP Address
+   ```
+
+3. **Format both header rows** (make them bold, add colors, etc.)
+4. **Note the Sheet IDs** from the URLs (you'll need these for the script)
+
+## Step 2: Get Your Sheet IDs
+
+### **How to Find Sheet IDs:**
+1. **Open each Google Sheet**
+2. **Look at the URL** - it will look like:
+   ```
+   https://docs.google.com/spreadsheets/d/1ABC123...XYZ/edit#gid=0
+   ```
+3. **Copy the long string** between `/d/` and `/edit`:
+   - **Client Sheet ID**: `1ABC123...XYZ` (example)
+   - **Contractor Sheet ID**: `1DEF456...ABC` (example)
+
+### **Important Notes:**
+- **Each sheet needs to be shared** with the Google account running the Apps Script
+- **Set permissions** to "Can edit" for the Apps Script account
+- **Keep the IDs secure** - they give access to your sheets
+
+## Step 3: Set up Google Apps Script
 
 1. **In your Google Sheet**, go to **Extensions > Apps Script**
 2. **Delete the default code** and replace it with this:
@@ -37,7 +66,11 @@ const CONFIG = {
   MAX_SUBMISSIONS_PER_DAY: 20,
   BLOCKED_IPS: [], // Add IPs to block here
   ENABLE_RECAPTCHA: true,
-  RECAPTCHA_SECRET_KEY: 'YOUR_RECAPTCHA_SECRET_KEY_HERE'
+  RECAPTCHA_SECRET_KEY: 'YOUR_RECAPTCHA_SECRET_KEY_HERE',
+  
+  // Google Sheets IDs - Replace with your actual sheet IDs
+  CLIENT_SHEET_ID: 'YOUR_CLIENT_SHEET_ID_HERE',
+  CONTRACTOR_SHEET_ID: 'YOUR_CONTRACTOR_SHEET_ID_HERE'
 };
 
 function doPost(e) {
@@ -67,22 +100,35 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
     
-    // Add to sheet
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    // Add to appropriate sheet based on type
     const timestamp = new Date();
-    const rowData = [
-      timestamp,
-      sanitizedData.type,
-      sanitizedData.name,
-      sanitizedData.email,
-      sanitizedData.postalCode,
-      sanitizedData.cleaningDetails || '',
-      sanitizedData.canWorkInCanada || '',
-      sanitizedData.cleaningExperience || '',
-      ip // Log IP for security monitoring
-    ];
     
-    sheet.appendRow(rowData);
+    if (sanitizedData.type === 'client') {
+      // Add to client sheet
+      const clientSheet = SpreadsheetApp.openById(CONFIG.CLIENT_SHEET_ID).getActiveSheet();
+      const clientRowData = [
+        timestamp,
+        sanitizedData.name,
+        sanitizedData.email,
+        sanitizedData.postalCode,
+        sanitizedData.cleaningDetails,
+        ip
+      ];
+      clientSheet.appendRow(clientRowData);
+    } else if (sanitizedData.type === 'contractor') {
+      // Add to contractor sheet
+      const contractorSheet = SpreadsheetApp.openById(CONFIG.CONTRACTOR_SHEET_ID).getActiveSheet();
+      const contractorRowData = [
+        timestamp,
+        sanitizedData.name,
+        sanitizedData.email,
+        sanitizedData.postalCode,
+        sanitizedData.canWorkInCanada,
+        sanitizedData.cleaningExperience,
+        ip
+      ];
+      contractorSheet.appendRow(contractorRowData);
+    }
     
     // Log successful submission
     logSubmission(ip, 'success');
@@ -280,7 +326,21 @@ function doGet() {
 5. **Copy the Site Key and Secret Key**
 6. **Update the CONFIG object** in your Apps Script with your Secret Key
 
-## Step 4: Deploy the Script
+## Step 4: Set Up Sheet Permissions
+
+### **Share Both Sheets with Apps Script:**
+1. **Open each Google Sheet**
+2. **Click "Share"** (top right)
+3. **Add your Google account** (the one running the Apps Script)
+4. **Set permission** to "Editor"
+5. **Click "Done"**
+
+### **Why This is Important:**
+- **Apps Script needs access** to both sheets
+- **Without proper permissions**, the script will fail
+- **Editor access** allows the script to add new rows
+
+## Step 5: Deploy the Script
 
 1. **Click "Deploy"** in the Apps Script editor
 2. **Choose "New deployment"**
@@ -309,6 +369,24 @@ GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz.../exec',
 2. **Fill out and submit** one of the waiting list forms
 3. **Check your Google Sheet** - you should see a new row with the submitted data
 4. **Check the browser console** for any error messages
+
+## Benefits of Separate Sheets
+
+### **Better Organization**
+- **Client data** is completely separate from contractor data
+- **Easier to manage** different types of submissions
+- **Cleaner data structure** - no mixed field types
+
+### **Business Advantages**
+- **Targeted marketing** - send different campaigns to each group
+- **Separate analytics** - track conversion rates for each audience
+- **Different workflows** - handle clients vs contractors differently
+- **Easier reporting** - generate specific reports for each group
+
+### **Data Management**
+- **No data mixing** - clients won't see contractor fields
+- **Easier filtering** - each sheet has relevant columns only
+- **Better scalability** - can add different fields for each group later
 
 ## Security Features
 
@@ -340,25 +418,45 @@ GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz.../exec',
 
 ## Troubleshooting
 
-### Common Issues:
+### **Common Issues:**
 
-1. **"Script not found" error**
+1. **"401 Unauthorized" error**
+   - **Re-deploy the script** as a Web App
+   - **Check permissions** - script must be authorized
+   - **Verify sheet sharing** - both sheets must be shared with your Google account
+   - **Re-authorize** the script if needed
+
+2. **"Script not found" error**
    - Make sure you copied the entire Web app URL
    - Ensure the script is deployed and accessible to "Anyone"
 
-2. **Form submits but no data appears**
+3. **Form submits but no data appears**
    - Check the Apps Script execution log in the Apps Script editor
    - Verify the sheet name matches exactly
+   - **Check sheet IDs** are correct in the CONFIG
 
-3. **CORS errors in console**
+4. **CORS errors in console**
    - This is normal with Google Apps Script - the form will still work
    - The `no-cors` mode handles this automatically
 
-4. **Permission denied errors**
+5. **Permission denied errors**
    - Make sure you set "Who has access" to "Anyone"
    - Re-deploy the script if needed
 
-### Testing the Script:
+### **Quick Fix for 401 Error:**
+
+1. **Go to Google Apps Script editor**
+2. **Click "Deploy" → "Manage deployments"**
+3. **Delete the current deployment**
+4. **Create new deployment** with same settings:
+   - **Type**: Web app
+   - **Execute as**: Me
+   - **Who has access**: Anyone
+5. **Copy the new Web app URL**
+6. **Update your config.js** with the new URL
+7. **Test the form** again
+
+### **Testing the Script:**
 
 1. **In Apps Script editor**, click the "Test" button
 2. **Choose "doGet"** function and click "Test"
@@ -380,7 +478,11 @@ const CONFIG = {
   MAX_SUBMISSIONS_PER_DAY: 20,        // Adjust daily limit
   BLOCKED_IPS: ['192.168.1.1'],       // Add IPs to block
   ENABLE_RECAPTCHA: true,             // Enable/disable reCAPTCHA
-  RECAPTCHA_SECRET_KEY: 'your_key'    // Your reCAPTCHA secret key
+  RECAPTCHA_SECRET_KEY: 'your_key',   // Your reCAPTCHA secret key
+  
+  // Google Sheets IDs - Replace with your actual sheet IDs
+  CLIENT_SHEET_ID: '1ABC123...XYZ',   // Client sheet ID
+  CONTRACTOR_SHEET_ID: '1DEF456...ABC' // Contractor sheet ID
 };
 ```
 
