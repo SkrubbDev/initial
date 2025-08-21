@@ -51,10 +51,16 @@ exports.handler = async (event, context) => {
     }
 
     // Prepare data for Google Apps Script
+    // Google Apps Script expects form data in a specific format
     const formData = new URLSearchParams();
     formData.append('email', data.email);
     formData.append('type', data.type);
     formData.append('timestamp', new Date().toISOString());
+
+    console.log('Sending to Google Apps Script:', {
+      url: GOOGLE_SCRIPT_URL,
+      data: Object.fromEntries(formData.entries())
+    });
 
     // Send to Google Apps Script
     const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -66,10 +72,20 @@ exports.handler = async (event, context) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Google Apps Script responded with status: ${response.status}`);
+      const errorText = await response.text();
+      console.error('Google Apps Script error response:', errorText);
+      throw new Error(`Google Apps Script responded with status: ${response.status}: ${errorText}`);
     }
 
-    const result = await response.text();
+    // Handle different response formats from Google Apps Script
+    let result;
+    try {
+      result = await response.text();
+      console.log('Google Apps Script response:', result);
+    } catch (parseError) {
+      console.log('Response received but could not parse as text');
+    }
+
     console.log('Form submitted successfully:', data.type, '-', data.email);
 
     return {
