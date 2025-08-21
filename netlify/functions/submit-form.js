@@ -63,6 +63,9 @@ exports.handler = async (event, context) => {
     });
 
     // Send to Google Apps Script
+    console.log('About to send request to:', GOOGLE_SCRIPT_URL);
+    console.log('Request body:', formData.toString());
+    
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       headers: {
@@ -70,6 +73,9 @@ exports.handler = async (event, context) => {
       },
       body: formData
     });
+    
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
       const errorText = await response.text();
