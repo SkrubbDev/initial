@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skrubb - Join Our Waiting Lists</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#16c5bb',
+                        secondary: '#02152b',
+                        accent: '#333333',
+                        'primary-light': '#4dd4cc',
+                        'primary-dark': '#0fa39b',
+                        'secondary-light': '#0a2a4a',
+                        'secondary-dark': '#010e1a'
+                    },
+                    fontFamily: {
+                        'lexend': ['Lexend Exa', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 min-h-screen flex flex-col">
+
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden flex-1 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <!-- Logo -->
+                <h1 class="text-4xl md:text-6xl font-medium text-secondary mb-6 font-lexend tracking-[-8px]">
+                    Welcome to <span class="text-primary hidden">Skrubb</span>
+                </h1>
+                <div class="mb-8 flex justify-center">
+                    <img src="images/skrubb-on-light.svg" alt="Skrubb Logo" class="h-24 md:h-32 w-auto">
+                </div>
+                
+                <p class="text-xl md:text-2xl text-accent mb-12 max-w-3xl mx-auto">
+                    Connecting clients with trusted cleaners for all your project needs. Join our exclusive waiting lists today.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button onclick="openModal('client')" id="clientBtn" class="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        Join Client Waiting List
+                    </button>
+                    <button onclick="openModal('contractor')" id="contractorBtn" class="w-full sm:w-auto bg-secondary hover:bg-secondary-light text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        Join Cleaner Waiting List
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <!-- Footer Logo -->
+                <div class="mb-4 flex justify-center">
+                    <img src="images/skrubb-on-dark.svg" alt="Skrubb Logo" class="h-6 w-auto opacity-80">
+                </div>
+                <p class="text-gray-400">&copy; <span id="currentYear"></span> Skrubb. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Forms Modal - Loaded from forms.html -->
+    <div id="formsContainer"></div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
