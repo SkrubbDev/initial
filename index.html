@@ -5,27 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skrubb - Join Our Waiting Lists</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#16c5bb',
-                        secondary: '#02152b',
-                        accent: '#333333',
-                        'primary-light': '#4dd4cc',
-                        'primary-dark': '#0fa39b',
-                        'secondary-light': '#0a2a4a',
-                        'secondary-dark': '#010e1a'
-                    },
-                    fontFamily: {
-                        'lexend': ['Lexend Exa', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="./dist/output.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 min-h-screen flex flex-col">
 
@@ -48,10 +28,10 @@
                 
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <button onclick="openModal('client')" id="clientBtn" class="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <button data-modal="client" id="clientBtn" class="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         Join Client Waiting List
                     </button>
-                    <button onclick="openModal('contractor')" id="contractorBtn" class="w-full sm:w-auto bg-secondary hover:bg-secondary-light text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <button data-modal="contractor" id="contractorBtn" class="w-full sm:w-auto bg-secondary hover:bg-secondary-light text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         Join Cleaner Waiting List
                     </button>
                 </div>

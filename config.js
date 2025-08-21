@@ -1,7 +1,7 @@
 // Configuration file for Skrubb Landing Page
 const CONFIG = {
-    // Google Apps Script Web App URL - Replace with your actual URL after deployment
-    GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbx9fCv4PICvOdWB9kkrR-k_tbAMfl-1lkC5hPpguEo2LoMbwWumHTzcHtIHjlGTq37r5w/exec',
+    // Backend API endpoint for secure form submission
+    API_ENDPOINT: '/api/submit-form',
     
     // Form submission settings
     SUBMISSION_TIMEOUT: 10000, // 10 seconds
@@ -11,8 +11,9 @@ const CONFIG = {
     
     // API endpoints (for future use)
     API_ENDPOINTS: {
-        waitingList: '/api/waiting-list',
-        contact: '/api/contact'
+        waitingList: '/api/submit-form',
+        contact: '/api/contact',
+        health: '/api/health'
     }
 };
 

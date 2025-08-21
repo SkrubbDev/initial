@@ -650,33 +650,39 @@ function submitToWaitingList(data) {
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
     
-    // Get Google Apps Script URL from config
-    const GOOGLE_SCRIPT_URL = CONFIG.GOOGLE_SCRIPT_URL;
+    // Get API endpoint from config
+    const API_ENDPOINT = CONFIG.API_ENDPOINT;
     
-    // Send data to Google Sheets
-    fetch(GOOGLE_SCRIPT_URL, {
+    // Send data to secure backend API
+    fetch(API_ENDPOINT, {
         method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
     })
     .then(response => {
-        // Since we're using no-cors, we can't read the response
-        // But we'll assume success if no error was thrown
-        
-        // Success - show confirmation
-        showNotification('Success! You have been added to the waiting list.', 'success');
-        
-        // Reset form and close modal
-        closeModal(data.type);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(result => {
+        if (result.success) {
+            // Success - show confirmation
+            showNotification('Success! You have been added to the waiting list.', 'success');
+            
+            // Reset form and close modal
+            closeModal(data.type);
+            
+            console.log('Waiting list submission successful:', data);
+        } else {
+            throw new Error(result.message || 'Submission failed');
+        }
         
         // Reset button
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-        
-        console.log('Waiting list submission successful:', data);
     })
     .catch(error => {
         console.error('Error submitting form:', error);
@@ -780,6 +786,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generate forms immediately
     generateForms();
     
+    // Setup CTA button event listeners
+    setupCTAButtons();
+    
     // Add any additional initialization code here
     // For example, analytics tracking, A/B testing, etc.
 });
+
+// Setup CTA button event listeners
+function setupCTAButtons() {
+    // Add event listeners to CTA buttons
+    const clientBtn = document.getElementById('clientBtn');
+    const contractorBtn = document.getElementById('contractorBtn');
+    
+    if (clientBtn) {
+        clientBtn.addEventListener('click', function() {
+            openModal('client');
+        });
+    }
+    
+    if (contractorBtn) {
+        contractorBtn.addEventListener('click', function() {
+            openModal('contractor');
+        });
+    }
+}

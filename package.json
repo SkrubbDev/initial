@@ -1,22 +1,40 @@
 {
   "name": "skrubb-landing-page",
   "version": "1.0.0",
-  "description": "Skrubb Landing Page - Local Development Setup",
-  "main": "index.html",
+  "description": "Skrubb cleaning service landing page with secure form handling",
+  "main": "server.js",
   "scripts": {
-    "dev": "live-server --port=3000 --open=/ --entry-file=index.html",
-    "start": "live-server --port=3000 --open=/ --entry-file=index.html",
-    "serve": "python3 -m http.server 3000",
-    "serve-python": "python -m http.server 3000"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "dev:full": "./dev.sh",
+    "build": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "build:watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "dev:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "test": "echo 'No tests specified'"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.21",
+    "nodemon": "^3.0.2",
+    "tailwindcss": "^4.1.12"
   },
   "keywords": [
     "landing-page",
-    "skrubb",
-    "cleaning-service"
+    "cleaning-service",
+    "form-handling",
+    "security"
   ],
-  "author": "Skrubb Team",
-  "license": "MIT"
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
