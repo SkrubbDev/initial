@@ -1,0 +1,13 @@
+{
+  "name": "skrubb-landing-page",
+  "version": "1.0.0",
+  "description": "Skrubb landing page - Connecting clients with trusted cleaners",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build step required'",
+    "start": "echo 'Static site - serve index.html'"
+  },
+  "keywords": ["landing-page", "skrubb", "cleaning-services"],
+  "author": "Skrubb",
+  "license": "MIT"
+}
